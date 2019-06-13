@@ -1,0 +1,37 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+language: R
+sudo: required
+dist: trusty
+cache:
+  - packages
+  - ccache
+latex: false
+warnings_are_errors: false
+
+apt_packages:
+  - libudunits2-dev
+  - libproj-dev
+  - libgeos-dev
+  - libspatialite-dev
+  - libgdal-dev
+
+r:
+  - release
+  - devel
+
+r_packages:
+  - devtools
+  - R6
+  - sf
+  - sp
+  - testthat
+
+r_check_args: --as-cran
+
+after_script:
+ - ./travis-tool.sh dump_logs
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
